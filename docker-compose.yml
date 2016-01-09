@@ -1,0 +1,13 @@
+app:
+  build: .
+  dockerfile: Dockerfile
+  volumes:
+    - ".:/usr/src/app"
+  command: "rake test"
+guard:
+  build: .
+  dockerfile: Dockerfile
+  volumes:
+    - ".:/usr/src/app"
+  command: "nohup guard start --force-polling --no-interactions"
+  ports: []
