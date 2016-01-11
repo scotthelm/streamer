@@ -1,0 +1,115 @@
+program:
+  name: "tca_midwest"
+  member:
+    properties:
+      - "addresses.state_province"
+      - "addresses.us_fips_code"
+    facts:
+      - fact: "geography.IA"
+      - fact: "geography.IN"
+      - fact: "geography.MO.22456"
+    and:
+      gte:
+        target: 10000
+        function:
+          aggregate:
+            list: "sales"
+            function:
+              sum:
+              property: "amount"
+  pipe:
+    assign_each:
+      list: "sales"
+      property: "product_group"
+      function:
+        lookup:
+          fact: "product.product_group"
+          by: "product"
+    assign_each:
+      list: "sales"
+      property: "application_rate"
+      function:
+        lookup:
+          fact: "product.application_rate"
+          by: "product"
+    assign_each:
+      list: "sales"
+      property: "applied_value"
+      function:
+        multiply:
+          property: "application_rate"
+          property: "units"
+    assign_each:
+      list: "sales"
+      property: "amount_per_applied_values"
+      function:
+        divide:
+          property: ""
+          property: "units"
+    assign_each:
+      list: "sales"
+      property: "value_example_property"
+      value:
+        property: "application_rate"
+    assign_each:
+      list: "sales"
+      property: "value_example_constant"
+      value: 5
+    create:
+  # might not be needed?
+      property: "sales_summary"
+      type: "Hash"
+    assign:
+      property: "sales_summary.product_group_acres"
+      function:
+        group:
+          list: "sales"
+          by: "product_group"
+          function:
+            sum:
+              property: "applied_value"
+# ---------------------------------------------
+# is this loopable in a higher level function?
+#
+    assign:
+      property: "sales_summary.percent_15_applied_value"
+      function:
+        least:
+          list: "sales_summary.product_group_acres"
+          property: "applied_value"
+    assign_each:
+      list: "sales_summary.product_group_acres"
+      property: "applied_value"
+      function:
+        subtract:
+          property: "sales_summary.percent_15_applied_value"
+          property: "applied_value"
+    assign:
+      property: "sales_summary.percent_10_applied_value"
+      function:
+        least:
+          list: "sales_summary.product_group_acres"
+          property: "applied_value"
+    assign_each:
+      list: "sales_summary.product_group_acres"
+      property: "applied_value"
+      function:
+        subtract:
+          property: "sales_summary.percent_10_applied_value"
+          property: "applied_value"
+    assign:
+      property: "sales_summary.percent_8_applied_value"
+      function:
+        least:
+          list: "sales_summary.product_group_acres"
+          property: "applied_value"
+# -----------------------------------------------
+# end
+#
+    assign_each:
+      list: "sales"
+      property: "percent_15_applied_value"
+      function:
+        divide:
+          numerator: "sales_summary.percent_15_applied_value"
+          denominator: "application_rate"
