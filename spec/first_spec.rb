@@ -1,5 +1,4 @@
-require 'minitest/spec'
-require 'minitest/autorun'
+require 'spec_helper'
 
 describe 'testing' do
   it 'works' do
