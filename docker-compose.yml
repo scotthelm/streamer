@@ -1,13 +1,16 @@
-app:
+app: &base
   build: .
   dockerfile: Dockerfile
   volumes:
     - ".:/usr/src/app"
+  volumes_from:
+    - bundle_data
   command: "rake test"
 guard:
-  build: .
-  dockerfile: Dockerfile
-  volumes:
-    - ".:/usr/src/app"
+  <<: *base
   command: "nohup guard start --force-polling --no-interactions"
   ports: []
+bundle_data:
+  image: tianon/true
+  volumes:
+    - /usr/local/bundle
