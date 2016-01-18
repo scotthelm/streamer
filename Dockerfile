@@ -1,4 +1,4 @@
-FROM rails:latest
+FROM ruby:latest
 
 RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
