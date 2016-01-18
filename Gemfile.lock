@@ -1,3 +1,8 @@
+PATH
+  remote: .
+  specs:
+    streamer (0.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -42,6 +47,7 @@ GEM
       method_source (~> 0.8.1)
       slop (~> 3.4)
     rainbow (2.0.0)
+    rake (10.5.0)
     rb-fsevent (0.9.7)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
@@ -63,12 +69,17 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bundler (~> 1.11)
   byebug
   guard
   guard-minitest
   guard-rubocop
+  minitest (~> 5.0)
+  pry
+  rake (~> 10.0)
   rubocop
   ruby_gntp
+  streamer!
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
