@@ -43,6 +43,29 @@ https://github.com/scotthelm/foo.This project is intended to be a safe,
 welcoming space for collaboration, and contributors are expected to adhere to
 the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
+## Development
+This gem includes a Docker environment for development. To begin development:
+
+```bash
+$ docker-compose build
+$ docker-compose run --rm app gem install bundler && bundle install
+```
+
+This will create the data container for gems at /usr/local/bundle used inside
+the app and guard containers.
+
+To start guard in the background:
+
+```bash
+$ docker-compose up -d guard
+```
+
+To start guard in the foreground, leave off the `-d`. To start an interactive
+session with the gem:
+
+```bash
+$ docker-compose run --rm app bin/console`
+```
 
 ## License
 
