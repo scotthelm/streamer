@@ -30,8 +30,29 @@ module Streamer
       end
     end
 
-    def functor(options = {})
-      Functor.new(payload, options)
+    def assign_each(list:, property:, value: nil, function: nil)
+      payload.dig(*list.split('.')).each do |item|
+        item[property] = value if value
+        item[property] = functor(replace_terms(item, function)).call if function
+      end
+      self
+    end
+
+    def replace_terms(item, function)
+      newfunc = Marshal.load(Marshal.dump(function))
+      newfunc[:terms] = newfunc[:terms].map do |t|
+        if t.is_a?(String) && t.start_with?('#')
+          t[0] = ''
+          item.dig(*t.split('.'))
+        else
+          t
+        end
+      end
+      newfunc
+    end
+
+    def functor(options = {}, pl = payload)
+      Functor.new(pl, options)
     end
   end
 end

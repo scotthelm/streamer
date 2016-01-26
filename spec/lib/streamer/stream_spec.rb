@@ -42,4 +42,35 @@ describe 'Stream' do
       ).payload['total_score'].must_equal 6
     end
   end
+
+  describe 'assign_each' do
+    # the '#' in the function terms means that it is applied to the item in the
+    # list, and not part of the overall hash
+    it 'assigns the function value to each of the items in a list' do
+      @stream.payload['x-factor'] = 0.1
+      @stream.assign_each(
+        list: 'scores',
+        property: 'rate',
+        function: {
+          type: 'multiply',
+          terms: ['x-factor', '#score']
+        }
+      )
+      @stream.payload['scores'][0]['rate'].must_be_within_delta 0.1, 0.00001
+      @stream.payload['scores'][1]['rate'].must_be_within_delta 0.2, 0.00001
+      @stream.payload['scores'][2]['rate'].must_be_within_delta 0.3, 0.00001
+    end
+
+    it 'assigns the value to each of the items in a list' do
+      @stream.payload['x-factor'] = 0.1
+      @stream.assign_each(
+        list: 'scores',
+        property: 'rate',
+        value: 0.1
+      )
+      @stream.payload['scores'][0]['rate'].must_be_within_delta 0.1, 0.00001
+      @stream.payload['scores'][1]['rate'].must_be_within_delta 0.1, 0.00001
+      @stream.payload['scores'][2]['rate'].must_be_within_delta 0.1, 0.00001
+    end
+  end
 end
