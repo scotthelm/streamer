@@ -1,0 +1,7 @@
+#!/bin/bash
+
+docker-compose run --rm guard gem install bundler
+docker-compose run --rm app gem install bundler
+docker-compose run --rm guard bundle install
+docker-compose run --rm app bundle install
+
