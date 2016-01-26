@@ -7,6 +7,10 @@ module Streamer
       @options = options
     end
 
+    def call
+      send(options.fetch(:type))
+    end
+
     def sum
       payload[options.fetch(:list)].inject(0.0) do |total, item|
         total + item[options.fetch(:property)]
@@ -15,7 +19,13 @@ module Streamer
 
     def multiply
       options.fetch(:terms).inject(1) do |total, item|
-        total * (prop(item) || 0)
+        if item.is_a? String
+          total * (prop(item) || 0)
+        elsif item.is_a? Numeric
+          total * item
+        else
+          fail "Streamer::Functor invalid term: #{item}"
+        end
       end
     end
 
@@ -35,10 +45,6 @@ module Streamer
     end
 
     private
-
-    def call
-      send(options.fetch(:type))
-    end
 
     def prop(p)
       payload.dig(*p.split('.'))
