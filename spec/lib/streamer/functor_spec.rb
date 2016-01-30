@@ -51,4 +51,9 @@ describe 'Functor' do
       ).call.must_equal 0.5
     end
   end
+
+  describe 'lookup' do
+    it 'has a fact_provider' do
+    end
+  end
 end
