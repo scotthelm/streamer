@@ -19,13 +19,12 @@ module Streamer
 
     def multiply
       options.fetch(:terms).inject(1) do |total, item|
-        if item.is_a? String
-          total * (prop(item) || 0)
-        elsif item.is_a? Numeric
-          total * item
-        else
+        unless item.is_a?(String) || item.is_a?(Numeric)
           fail "Streamer::Functor invalid term: #{item}"
         end
+        val = total * (prop(item) || 0) if item.is_a? String
+        val = total * item if item.is_a? Numeric
+        val
       end
     end
 
@@ -42,6 +41,16 @@ module Streamer
       num = options.fetch(:numerator)
       den = options.fetch(:denominator)
       prop(num).to_f / prop(den).to_f
+    end
+
+    def lookup
+      finder = options.fetch(:finder)
+      finder.find(lookup_key)
+    end
+
+    def lookup_key
+      item_key = options.fetch(:terms)[0]
+      options[:fact] = options.fetch(:fact).gsub('#', "#{item_key}.")
     end
 
     private
