@@ -10,4 +10,8 @@ describe Streamer::FactProviders::YamlProvider do
   it 'should have a find method' do
     @provider.must_respond_to(:find)
   end
+
+  it 'should find an element by key' do
+    @provider.find('years.current').must_equal 2016
+  end
 end
