@@ -53,10 +53,32 @@ module Streamer
       options[:fact] = options.fetch(:fact).gsub('#', "#{item_key}.")
     end
 
+    { gte: :>=, lte: :<=, gt: :>, lt: :<, eq: :== }.each do |k, v|
+      define_method(k) { compare(v) }
+    end
+
+    def compare(op_symbol)
+      tar = target(options.fetch(:target))
+      function = options[:function]
+      value = options[:value]
+      return functor(function).call.send(op_symbol, tar) if function
+      return value.send(op_symbol, target) if value
+      fail 'Streamer::Functor#gte no value or fuction given'
+    end
+
     private
 
     def prop(p)
       payload.dig(*p.split('.'))
+    end
+
+    def functor(function_hash)
+      Functor.new(payload, function_hash)
+    end
+
+    def target(options)
+      return options[:value] if options[:value]
+      return functor(options[:function]).call if options[:function]
     end
   end
 end

@@ -109,4 +109,42 @@ describe 'Stream' do
       @stream.payload['sales'][2]['rate'].must_be_within_delta 0.3, 0.00001
     end
   end
+
+  describe 'filters' do
+    it 'must assign bool filter_value key to payload passing value target' do
+      @stream.filter(
+        function: {
+          type: 'gte',
+          target: {
+            value: 4_500
+          },
+          function: {
+            type: 'sum',
+            list: 'sales',
+            property: 'amount'
+          }
+        }
+      ).payload['filter_value'].must_equal true
+    end
+
+    it 'must assign bool filter_value key to payload passing function target' do
+      @stream.filter(
+        function: {
+          type: 'eq',
+          target: {
+            function: {
+              type: 'sum',
+              list: 'sales',
+              property: 'amount'
+            }
+          },
+          function: {
+            type: 'sum',
+            list: 'sales',
+            property: 'amount'
+          }
+        }
+      ).payload['filter_value'].must_equal true
+    end
+  end
 end
