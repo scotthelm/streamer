@@ -4,9 +4,8 @@ module Streamer
   class Finder
     attr_reader :fact_provider
     def initialize(provider = nil)
-      if provider
-        @fact_provider = provider
-      else
+      @fact_provider = provider
+      unless @fact_provider
         @fact_provider = Streamer::FactProviders::HashProvider.new
       end
     end
