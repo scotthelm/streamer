@@ -4,6 +4,7 @@ module Streamer
   # Stream is the object that is responsible for mutating the data passed to it
   class Stream
     attr_reader :payload
+    attr_accessor :finder
     def initialize(hash)
       @payload = hash
     end
