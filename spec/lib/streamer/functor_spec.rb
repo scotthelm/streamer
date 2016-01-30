@@ -54,6 +54,15 @@ describe 'Functor' do
 
   describe 'lookup' do
     it 'has a fact_provider' do
+      Streamer::Functor.new(
+        @hash,
+        type: 'lookup',
+        fact: 'products.#rate',
+        terms: ['#product'],
+        finder: Streamer::Finder.new(
+          Streamer::FactProviders::HashProvider.new({})
+        )
+      )
     end
   end
 end

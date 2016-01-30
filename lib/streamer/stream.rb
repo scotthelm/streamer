@@ -9,6 +9,10 @@ module Streamer
       @payload = hash
     end
 
+    def filter(function:)
+      assign(property: 'filter_value', value: functor(function).call)
+    end
+
     def assign(property:, value: nil, function: nil)
       assign_property(
         structure: payload,
