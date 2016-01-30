@@ -4,16 +4,13 @@ module Streamer
     class HashProvider
       attr_reader :data
       def initialize(data = nil)
-        if data
-          @data = data
-        else
-          @data = {}
-        end
+        @data = data || {}
       end
 
       def find(key)
-        keys = key.split('.').map(&:to_sym)
-        data.dig(*keys)
+        string_keys = key.split('.')
+        sym_keys = key.split('.').map(&:to_sym)
+        data.dig(*string_keys) || data.dig(*sym_keys)
       end
     end
   end
