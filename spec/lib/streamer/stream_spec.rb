@@ -68,9 +68,7 @@ describe 'Stream' do
           terms: ['x-factor', '#score']
         }
       )
-      @stream.payload['scores'][0]['rate'].must_be_within_delta 0.1, 0.00001
       @stream.payload['scores'][1]['rate'].must_be_within_delta 0.2, 0.00001
-      @stream.payload['scores'][2]['rate'].must_be_within_delta 0.3, 0.00001
     end
 
     it 'assigns the value to each of the items in a list' do
@@ -80,9 +78,7 @@ describe 'Stream' do
         property: 'rate',
         value: 0.1
       )
-      @stream.payload['scores'][0]['rate'].must_be_within_delta 0.1, 0.00001
       @stream.payload['scores'][1]['rate'].must_be_within_delta 0.1, 0.00001
-      @stream.payload['scores'][2]['rate'].must_be_within_delta 0.1, 0.00001
     end
   end
 
@@ -93,7 +89,7 @@ describe 'Stream' do
       )
     end
 
-    it 'can lookup values' do
+    it 'can assign values from lookup values' do
       @stream.assign_each(
         list: 'sales',
         property: 'rate',
@@ -104,9 +100,10 @@ describe 'Stream' do
           finder: @stream.finder
         }
       )
-      @stream.payload['sales'][0]['rate'].must_be_within_delta 0.1, 0.00001
-      @stream.payload['sales'][1]['rate'].must_be_within_delta 0.2, 0.00001
-      @stream.payload['sales'][2]['rate'].must_be_within_delta 0.3, 0.00001
+      [1, 2, 3].each do |x|
+        @stream.payload['sales'][x - 1]['rate']
+          .must_be_within_delta (0.1 * x), 0.00001
+      end
     end
   end
 
@@ -145,6 +142,21 @@ describe 'Stream' do
           }
         }
       ).payload['filter_value'].must_equal true
+    end
+  end
+
+  describe 'group' do
+    it 'must group a list by a key, using a function' do
+      @stream.assign(
+        property: 'sales_summary.amount_by_product',
+        function: {
+          type: 'group',
+          list: 'sales',
+          by: 'product',
+          operator: '+',
+          operand: 'amount'
+        }
+      ).payload['sales_summary']['amount_by_product']['product1'].must_equal 280
     end
   end
 end
