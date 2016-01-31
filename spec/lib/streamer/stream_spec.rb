@@ -2,27 +2,7 @@ require './spec/spec_helper'
 describe 'Stream' do
   before :each do
     @subject = Streamer::Stream
-    @hash = {
-      'this' => 'that',
-      'scores' => [
-        { 'month' => 'jan', 'score' => 1 },
-        { 'month' => 'feb', 'score' => 2 },
-        { 'month' => 'mar', 'score' => 3 }
-      ],
-      'sales' => [
-        { 'product' => 'product1', 'units' => 100, 'amount' => 280 },
-        { 'product' => 'product2', 'units' => 300, 'amount' => 2800 },
-        { 'product' => 'product3', 'units' => 200, 'amount' => 1700 }
-      ]
-    }
-    @stream = @subject.new(@hash)
-    @facts = {
-      'products' => {
-        'product1' => { 'rate' => 0.1, 'group' => 'category 3' },
-        'product2' => { 'rate' => 0.2, 'group' => 'category 1' },
-        'product3' => { 'rate' => 0.3, 'group' => 'category 2' }
-      }
-    }
+    @stream = @subject.new(TestHashes.streamer_hash)
   end
 
   describe 'assign' do
@@ -85,7 +65,7 @@ describe 'Stream' do
   describe 'fact_finder' do
     before :each do
       @stream.finder = Streamer::Finder.new(
-        Streamer::FactProviders::HashProvider.new(@facts)
+        Streamer::FactProviders::HashProvider.new(TestHashes.fact_hash)
       )
     end
 
