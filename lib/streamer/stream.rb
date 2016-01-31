@@ -43,11 +43,11 @@ module Streamer
       self
     end
 
-    def replace_terms(item, function)
-      newfunc = Marshal.load(Marshal.dump(function))
+    def replace_terms(item, function_hash)
+      newfunc = Marshal.load(Marshal.dump(function_hash))
       newfunc[:terms] = newfunc[:terms].map do |t|
         if t.is_a?(String) && t.start_with?('#')
-          t[0] = ''
+          t[0] = '' # remove the '#'
           item.dig(*t.split('.'))
         else
           t
