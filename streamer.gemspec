@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['helm.scott@gmail.com']
 
   spec.summary       = 'streams a hash through a set of configurable functions'
-  spec.description   = 'a hash goes in, value comes out'
+  spec.description   = 'a hash goes in, the transformed hash comes out'
   spec.homepage      = 'streamer'
   spec.license       = 'MIT'
 
