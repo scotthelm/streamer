@@ -26,7 +26,7 @@ module Streamer
     def assign_property(structure:, properties:, value: nil, function: nil)
       properties.each_with_index do |prop, index|
         if index == properties.size - 1
-          structure[prop] = value if value
+          structure[prop] = value unless value.nil?
           structure[prop] = functor(function).call if function
         else
           structure[prop] = {} unless structure[prop]
@@ -37,7 +37,7 @@ module Streamer
 
     def assign_each(list:, property:, value: nil, function: nil)
       payload.dig(*list.split('.')).each do |item|
-        item[property] = value if value
+        item[property] = value unless value.nil?
         item[property] = functor(replace_terms(item, function)).call if function
       end
       self

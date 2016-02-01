@@ -62,7 +62,7 @@ module Streamer
       function = options[:function]
       value = options[:value]
       return functor(function).call.send(op_symbol, tar) if function
-      return value.send(op_symbol, target) if value
+      return value.send(op_symbol, target) unless value.nil?
       fail 'Streamer::Functor#gte no value or fuction given'
     end
 
