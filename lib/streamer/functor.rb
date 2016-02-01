@@ -81,6 +81,20 @@ module Streamer
       end
     end
 
+    def member
+      values = options.fetch(:properties).map do |pk|
+        value(pk.split('.'))
+      end.flatten
+      (values & options.fetch(:facts)).size > 0
+    end
+
+    def value(pk, data = payload)
+      return data if pk.size == 0
+      data = data[pk.shift]
+      return data.map { |x| value(pk, x) } if data.is_a? Array
+      value(pk, data)
+    end
+
     private
 
     def prop(p)

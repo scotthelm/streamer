@@ -1,6 +1,13 @@
 class TestHashes
   def self.streamer_hash # rubocop:disable MethodLength
     {
+      'addresses' => [
+        {
+          'city' => 'De Moines',
+          'state_province' => 'IA',
+          'us_fips_code' => '22333'
+        }
+      ],
       'this' => 'that',
       'scores' => [
         { 'month' => 'jan', 'score' => 1 },
