@@ -95,6 +95,13 @@ module Streamer
       value(pk, data)
     end
 
+    def least
+      vals = value(options.fetch(:list).split('.')).map do |item|
+        item[options.fetch(:property)]
+      end
+      vals.sort.shift
+    end
+
     private
 
     def prop(p)

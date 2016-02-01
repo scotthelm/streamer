@@ -65,4 +65,15 @@ describe 'Functor' do
       )
     end
   end
+
+  describe 'least' do
+    it 'finds the least number in a list' do
+      Streamer::Functor.new(
+        @hash,
+        type: 'least',
+        list: 'scores',
+        property: 'score'
+      ).call.must_equal 1
+    end
+  end
 end
