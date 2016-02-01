@@ -4,6 +4,9 @@ The Streamer gem provides a configurable stream that takes a hash payload, and
 performs functions on the hash, returning an instance of the stream with the
 resulting payload.
 
+The StreamBuilder uses a hash as configuration to string together the calls
+that each stream makes.
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -22,7 +25,15 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+This library transforms a hash. A StreamBuilder is fed a configuration hash
+(usually a yaml file) that creates a chainable set of transformations using
+the Stream object. The Stream has methods that are used to assign the results
+of functions on the payload, back to the payload.
+
+```ruby
+sb = StreamBuilder.new(YAML.load(File.read('./config/config.yml')))
+result = sb.transform
+```
 
 ## Development
 
