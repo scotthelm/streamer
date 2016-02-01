@@ -139,4 +139,16 @@ describe 'Stream' do
       ).payload['sales_summary']['amount_by_product']['product1'].must_equal 280
     end
   end
+
+  describe 'member' do
+    it 'determines that a property is a member of a set of facts' do
+      @stream.filter(
+        function: {
+          type: 'member',
+          properties: ['addresses.state_province', 'addresses.us_fips_code'],
+          facts: %w(IA IN 22456)
+        }
+      ).payload['filter_value'].must_equal true
+    end
+  end
 end
