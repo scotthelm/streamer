@@ -1,6 +1,6 @@
 module Streamer
   # Finder maintains a consistent interface for all of the fact_providers
-  # It allows the Stream to have a consisten finding pattern.
+  # It allows the Stream to have a consistent finding pattern.
   class Finder
     attr_reader :fact_provider
     def initialize(provider = nil)
