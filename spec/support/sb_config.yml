@@ -1,0 +1,14 @@
+:filter:
+  - :function:
+      :type: 'lte'
+      :target:
+        :value: 4500
+      :function:
+        :type: 'sum'
+        :list: 'sales'
+        :property: 'amount'
+:transform:
+  - :assign_each:
+      :list: sales
+      :property: rate
+      :value: 0.2

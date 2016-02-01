@@ -31,4 +31,8 @@ class TestHashes
       }
     }
   end
+
+  def self.sb_config
+    YAML.load(File.read('./spec/support/sb_config.yml'))
+  end
 end
