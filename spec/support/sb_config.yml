@@ -12,7 +12,7 @@
       :properties:
         - scores.month
       :facts:
-        - oct
+        - jan
 :transform:
   - :assign_each:
       :list: sales

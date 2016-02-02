@@ -7,14 +7,26 @@ module Streamer
       @config = config
     end
 
-    def flow(payload)
+    def process(payload)
       @payload = payload
-      filter_value = config[:filter].inject(true) do |val, f|
+      stream.payload['filter_value'] = filter_value
+      transform if stream.payload['filter_value']
+      stream
+    end
+
+    def transform
+      config[:transform].each do |tx|
+        tx.each do |k, v|
+          stream.send(k, v)
+        end
+      end
+    end
+
+    def filter_value
+      config[:filter].inject(true) do |val, f|
         val &&= stream.filter(function: f[:function]).payload['filter_value']
         val
       end
-      stream.payload['filter_value'] = filter_value
-      stream
     end
 
     def stream
