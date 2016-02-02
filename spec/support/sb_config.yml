@@ -1,12 +1,18 @@
 :filter:
   - :function:
-      :type: 'lte'
+      :type: gte
       :target:
         :value: 4500
       :function:
-        :type: 'sum'
-        :list: 'sales'
-        :property: 'amount'
+        :type: sum
+        :list: sales
+        :property: amount
+  - :function:
+      :type: member
+      :properties:
+        - scores.month
+      :facts:
+        - oct
 :transform:
   - :assign_each:
       :list: sales
