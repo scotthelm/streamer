@@ -7,7 +7,12 @@ describe Streamer::StreamBuilder do
   end
 
   it 'filters documents given a filter' do
-    subject.flow(TestHashes.streamer_hash)
-           .payload['filter_value'].must_equal false
+    subject.process(TestHashes.streamer_hash)
+           .payload['filter_value'].must_equal true
+  end
+
+  it 'transforms a document given steps in the transform array' do
+    subject.process(TestHashes.streamer_hash)
+           .payload['sales'][0]['rate'].must_equal 0.2
   end
 end
