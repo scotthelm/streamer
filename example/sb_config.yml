@@ -1,0 +1,25 @@
+:filter:
+  - :function:
+      :type: member
+      :properties:
+        - sales.customer_state
+      :facts:
+        - IA
+        - KS
+:transform:
+  - :assign_each:
+      :list: sales
+      :property: amount_per_unit
+      :function:
+        :type: divide
+        :terms:
+          - '#amount'
+          - '#units'
+  - :assign:
+      :property: summary.sales_by_product
+      :function:
+        :type: group
+        :list: sales
+        :by: product
+        :operator: +
+        :operand: amount
