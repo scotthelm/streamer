@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "starting development console"
+docker-compose run --rm app ./bin/console
