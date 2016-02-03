@@ -47,7 +47,7 @@ describe 'Functor' do
     it 'divides two properties in the document' do
       Streamer::Functor.new(
         @hash,
-        type: 'divide', numerator: 'numerator', denominator: 'denominator'
+        type: 'divide', terms: %w(numerator denominator)
       ).call.must_equal 0.5
     end
   end

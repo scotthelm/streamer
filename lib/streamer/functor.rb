@@ -37,10 +37,18 @@ module Streamer
     end
 
     def divide
-      return 0.0 if prop(options.fetch(:denominator)).to_f == 0.0
-      num = options.fetch(:numerator)
-      den = options.fetch(:denominator)
-      prop(num).to_f / prop(den).to_f
+      terms = numerify(options.fetch(:terms))
+      fail 'Streamer::Functor# divide: too many terms' if terms.size > 2
+      return 0.0 if terms.any? { |t| t.to_f == 0.0 }
+      terms[0].to_f / terms[1].to_f
+    end
+
+    def numerify(terms)
+      terms.map do |t|
+        val = prop(t) if t.is_a? String
+        val = t if t.is_a? Numeric
+        val
+      end
     end
 
     def lookup
@@ -77,7 +85,10 @@ module Streamer
     def accumulate(list, group_key, operand_key, operator)
       payload[list].each_with_object({}) do |item, val|
         val[item[group_key]] =
-          (val[item[group_key]] || 0.0).send(operator, (item[operand_key] || 0))
+          (val[item[group_key]] || 0.0).send(
+            operator,
+            (item[operand_key].to_f || 0)
+          )
       end
     end
 
