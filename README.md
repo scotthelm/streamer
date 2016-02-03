@@ -30,24 +30,14 @@ This library transforms a hash. A StreamBuilder is fed a configuration hash
 the Stream object. The Stream has methods that are used to assign the results
 of functions on the payload, back to the payload.
 
-```ruby
-sb = StreamBuilder.new(YAML.load(File.read('./config/config.yml')))
-result = sb.process('the' => 'document', 'to' => 'process')
-```
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at
-https://github.com/scotthelm/foo.This project is intended to be a safe,
-welcoming space for collaboration, and contributors are expected to adhere to
-the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Please have a look at the [examples](./examples) directory for some simple
+sample usage
 
 ## Development
 This gem includes a Docker environment for development. To begin development:
 
 ```bash
-$ docker-compose build
-$ docker-compose run --rm app gem install bundler && bundle install
+$ script/init
 ```
 
 This will create the data container for gems at /usr/local/bundle used inside
@@ -59,12 +49,24 @@ To start guard in the background:
 $ script/guard
 ```
 
-To start guard in the foreground, `script/test`. To start an interactive
-session with the gem:
+To start guard in the foreground, 
+
+```bash
+script/test
+```
+
+To start an interactive session with the gem:
 
 ```bash
 script/console
 ```
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at
+https://github.com/scotthelm/foo.This project is intended to be a safe,
+welcoming space for collaboration, and contributors are expected to adhere to
+the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
