@@ -32,20 +32,8 @@ of functions on the payload, back to the payload.
 
 ```ruby
 sb = StreamBuilder.new(YAML.load(File.read('./config/config.yml')))
-result = sb.transform
+result = sb.process('the' => 'document', 'to' => 'process')
 ```
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then,
-run `rake test` to run the tests. You can also run `bin/console` for an
-interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To
-release a new version, update the version number in `version.rb`, and then run
-`bundle exec rake release`, which will create a git tag for the version, push
-git commits and tags, and push the `.gem` file to
-rubygems.org](https://rubygems.org).
 
 ## Contributing
 
@@ -68,14 +56,14 @@ the app and guard containers.
 To start guard in the background:
 
 ```bash
-$ docker-compose up -d guard
+$ script/guard
 ```
 
-To start guard in the foreground, leave off the `-d`. To start an interactive
+To start guard in the foreground, `script/test`. To start an interactive
 session with the gem:
 
 ```bash
-$ docker-compose run --rm app bin/console`
+script/console
 ```
 
 ## License
