@@ -3,6 +3,8 @@ app: &base
   dockerfile: Dockerfile
   volumes:
     - ".:/usr/src/app"
+  environment:
+    - "GNTP_NOTIFY=true"
   volumes_from:
     - bundle_data
   command: "rake test"

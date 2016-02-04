@@ -1,4 +1,5 @@
-notification :gntp, host: '10.0.2.2', sticky: false
+notification :off unless ENV['GNTP_NOTIFY']
+notification :gntp, host: '10.0.2.2', sticky: false if ENV['GNTP_NOTIFY']
 
 guard :minitest do
   watch(%r{^spec/.+_spec\.rb$})
