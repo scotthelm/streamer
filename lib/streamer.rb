@@ -1,5 +1,5 @@
 require 'streamer/finder'
-require 'streamer/functor'
+require 'streamer/functors'
 require 'streamer/fact_providers'
 require 'streamer/stream'
 require 'streamer/stream_builder'
