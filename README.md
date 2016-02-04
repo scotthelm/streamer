@@ -1,5 +1,7 @@
 # Streamer
 
+[![Build Status](https://travis-ci.org/scotthelm/streamer.svg?branch=master)](https://travis-ci.org/scotthelm/streamer)
+
 The Streamer gem provides a configurable stream that takes a hash payload, and
 performs functions on the hash, returning an instance of the stream with the
 resulting payload.
