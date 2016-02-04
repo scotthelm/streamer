@@ -12,13 +12,13 @@ describe 'Functor' do
     }
   end
   it 'accepts a hash and options for initialization' do
-    subject = Streamer::Functor.new(@hash, {})
+    subject = Streamer::Functors::Functor.new(@hash, {})
     subject.wont_be_nil
   end
 
   describe 'sum' do
     it 'sums a list' do
-      Streamer::Functor.new(
+      Streamer::Functors::Functor.new(
         @hash,
         type: 'sum', list: 'scores', property: 'score'
       ).call.must_equal 6
@@ -27,7 +27,7 @@ describe 'Functor' do
 
   describe 'multiply' do
     it 'multiplies a list of properties in the document' do
-      Streamer::Functor.new(
+      Streamer::Functors::Functor.new(
         @hash,
         type: 'multiply', terms: %w(numerator denominator)
       ).call.must_equal 8
@@ -36,7 +36,7 @@ describe 'Functor' do
 
   describe 'subtract' do
     it 'subtracts a list of properties in the document' do
-      Streamer::Functor.new(
+      Streamer::Functors::Functor.new(
         @hash,
         type: 'subtract', terms: %w(denominator numerator)
       ).call.must_equal 2
@@ -45,7 +45,7 @@ describe 'Functor' do
 
   describe 'divide' do
     it 'divides two properties in the document' do
-      Streamer::Functor.new(
+      Streamer::Functors::Functor.new(
         @hash,
         type: 'divide', terms: %w(numerator denominator)
       ).call.must_equal 0.5
@@ -54,7 +54,7 @@ describe 'Functor' do
 
   describe 'lookup' do
     it 'has a fact_provider' do
-      Streamer::Functor.new(
+      Streamer::Functors::Functor.new(
         @hash,
         type: 'lookup',
         fact: 'products.#rate',
@@ -68,7 +68,7 @@ describe 'Functor' do
 
   describe 'least' do
     it 'finds the least number in a list' do
-      Streamer::Functor.new(
+      Streamer::Functors::Functor.new(
         @hash,
         type: 'least',
         list: 'scores',
