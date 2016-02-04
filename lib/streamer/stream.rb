@@ -57,7 +57,7 @@ module Streamer
     end
 
     def functor(options = {}, pl = payload)
-      Functor.new(pl, options)
+      Streamer::Functors::Functor.new(pl, options)
     end
   end
 end
