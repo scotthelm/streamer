@@ -1,6 +1,8 @@
-require 'rake'
+require 'guard'
 
-task default: :test
-task :test do
-  Dir.glob('./test/*_test.rb').each { |file| require file }
+task :guards do
+  Guard.setup
+  Guard.state.session.plugins.all.each(&:run_all)
 end
+
+task default: :guards
