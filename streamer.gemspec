@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'streams a hash through a set of configurable functions'
   spec.description   = 'a hash goes in, the transformed hash comes out'
-  spec.homepage      = 'streamer'
+  spec.homepage      = 'https://github.com/scotthelm/streamer'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
