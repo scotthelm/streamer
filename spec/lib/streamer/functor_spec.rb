@@ -16,6 +16,13 @@ describe 'Functor' do
     subject.wont_be_nil
   end
 
+  it 'counts items in a list' do
+    Streamer::Functors::Functor.new(
+      @hash,
+      type: 'count', list: 'scores'
+    ).call.must_equal 3
+  end
+
   describe 'sum' do
     it 'sums a list' do
       Streamer::Functors::Functor.new(
