@@ -23,6 +23,13 @@ describe 'Functor' do
     ).call.must_equal 3
   end
 
+  it 'averages items given a list and a property' do
+    Streamer::Functors::Functor.new(
+      @hash,
+      type: 'average', list: 'scores', property: 'score'
+    ).call.must_equal 2.0
+  end
+
   describe 'sum' do
     it 'sums a list' do
       Streamer::Functors::Functor.new(
