@@ -1,4 +1,5 @@
 require 'streamer/functors/functor'
+require 'streamer/functors/count'
 require 'streamer/functors/divide'
 require 'streamer/functors/eq'
 require 'streamer/functors/group'
