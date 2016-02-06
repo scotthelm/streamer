@@ -3,14 +3,13 @@ module Streamer
   module FactProviders
     # YamlProvider provides data from a yaml file
     class YamlProvider
+      extend Forwardable
       attr_reader :data
+      delegate find: :provider
+
       def initialize(path: nil, yaml: nil)
         load_file(path) if path
         load_yaml(yaml) if yaml
-      end
-
-      def find(key)
-        provider.find(key)
       end
 
       def load_file(path)
