@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/scotthelm/streamer.svg?branch=master)](https://travis-ci.org/scotthelm/streamer)
 [![Code Climate](https://codeclimate.com/github/scotthelm/streamer/badges/gpa.svg)](https://codeclimate.com/github/scotthelm/streamer)
+[![Test Coverage](https://codeclimate.com/github/scotthelm/streamer/badges/coverage.svg)](https://codeclimate.com/github/scotthelm/streamer/coverage)
 
 The Streamer gem provides a configurable stream that takes a hash payload, and
 performs functions on the hash, returning an instance of the stream with the
