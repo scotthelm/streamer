@@ -84,6 +84,7 @@ DEPENDENCIES
   rake (~> 10.0)
   rubocop
   ruby_gntp
+  simplecov
   streamer!
 
 BUNDLED WITH
