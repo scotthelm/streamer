@@ -47,12 +47,6 @@ $ script/init
 This will create the data container for gems at /usr/local/bundle used inside
 the app and guard containers.
 
-To start guard in the background:
-
-```bash
-$ script/guard
-```
-
 To start guard in the foreground, 
 
 ```bash
