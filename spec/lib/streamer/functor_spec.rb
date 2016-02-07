@@ -46,6 +46,16 @@ describe 'Functor' do
         type: 'multiply', terms: %w(numerator denominator)
       ).call.must_equal 8
     end
+
+    it 'fails on invalid terms' do
+      err = lambda do
+        Streamer::Functors::Functor.new(
+          @hash,
+          type: 'multiply', terms: ['numerator', ['denominator']]
+        ).call
+      end.must_raise RuntimeError
+      err.message.must_match(/Streamer::/)
+    end
   end
 
   describe 'subtract' do
@@ -88,6 +98,65 @@ describe 'Functor' do
         list: 'scores',
         property: 'score'
       ).call.must_equal 1
+    end
+  end
+
+  describe 'comparisons' do
+    it 'can compare a target and a value' do
+      Streamer::Functors::Functor.new(
+        @hash,
+        type: 'gte',
+        target: {
+          value: 4_500
+        },
+        value: 4_500
+      ).call.must_equal true
+    end
+
+    it 'fails if no target or value given' do
+      err = lambda do
+        Streamer::Functors::Functor.new(
+          @hash,
+          type: 'gte',
+          target: {
+            value: 4_500
+          }
+        ).call
+      end.must_raise RuntimeError
+      err.message.must_match(/Streamer::Functor/)
+    end
+
+    it 'handles > comparisons' do
+      Streamer::Functors::Functor.new(
+        @hash,
+        type: 'gt',
+        target: {
+          value: 4_500
+        },
+        value: 4_501
+      ).call.must_equal true
+    end
+
+    it 'handles < comparisons' do
+      Streamer::Functors::Functor.new(
+        @hash,
+        type: 'lt',
+        target: {
+          value: 4_500
+        },
+        value: 4_499
+      ).call.must_equal true
+    end
+
+    it 'handles <= comparisons' do
+      Streamer::Functors::Functor.new(
+        @hash,
+        type: 'lte',
+        target: {
+          value: 4_500
+        },
+        value: 4_500
+      ).call.must_equal true
     end
   end
 end
