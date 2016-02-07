@@ -28,6 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'guard'
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'ruby_gntp'
-  spec.add_development_dependency 'guard-minitest'
   spec.add_development_dependency 'guard-rubocop'
+  spec.add_development_dependency 'guard-rake'
+  spec.add_development_dependency 'simplecov'
 end

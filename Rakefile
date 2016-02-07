@@ -1,8 +1,8 @@
-require 'guard'
+require 'rake/testtask'
 
-task :guards do
-  Guard.setup
-  Guard.state.session.plugins.all.each(&:run_all)
+Rake::TestTask.new do |t|
+  t.libs << 'spec'
+  t.pattern = 'spec/**/*.rb'
 end
 
-task default: :guards
+task default: :test
