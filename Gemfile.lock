@@ -73,17 +73,17 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.11)
-  byebug
+  byebug (~> 8)
   codeclimate-test-reporter
-  guard
-  guard-rake
-  guard-rubocop
+  guard (~> 2)
+  guard-rake (~> 1)
+  guard-rubocop (~> 1)
   minitest (~> 5.0)
   pry
   rake (~> 10.0)
-  rubocop
-  ruby_gntp
-  simplecov
+  rubocop (~> 0.36.0)
+  ruby_gntp (~> 0.3)
+  simplecov (~> 0)
   streamer!
 
 BUNDLED WITH
