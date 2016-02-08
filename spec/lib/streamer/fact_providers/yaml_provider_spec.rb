@@ -14,4 +14,10 @@ describe Streamer::FactProviders::YamlProvider do
   it 'should find an element by key' do
     @provider.find('years.current').must_equal 2016
   end
+
+  it 'accepts a yml file for data' do
+    @provider = Streamer::FactProviders::YamlProvider.new(
+      path: File.expand_path('../../../../support/test.yml', __FILE__).to_s
+    ).find('products.product1.product_group').must_equal 1
+  end
 end

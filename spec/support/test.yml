@@ -1,0 +1,5 @@
+products:
+  product1:
+    product_group: 1
+    name: 'Product 1'
+    application_rate: 0.1
