@@ -21,4 +21,9 @@ describe Streamer::Finder do
   it 'finds a value for a given key' do
     @finder.find('example.nfl_teams.panthers.wins').must_equal 15
   end
+
+  it 'has a default provider' do
+    Streamer::Finder.new.fact_provider
+                    .must_be_kind_of Streamer::FactProviders::HashProvider
+  end
 end
