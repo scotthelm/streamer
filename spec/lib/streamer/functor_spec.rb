@@ -7,13 +7,50 @@ describe 'Functor' do
         { 'month' => 'feb', 'score' => 2 },
         { 'month' => 'mar', 'score' => 3 }
       ],
+      'sales' => [
+        { 'purchase_date' => '2015-11-01', 'product' => 'prod2', amount: 100 },
+        { 'purchase_date' => '2015-09-01', 'product' => 'prod1', amount: 200 },
+        { 'purchase_date' => '2016-09-01', 'product' => 'prod1', amount: 300 }
+      ],
       'numerator' => 2,
       'denominator' => 4
     }
   end
+
   it 'accepts a hash and options for initialization' do
     subject = Streamer::Functors::Functor.new(@hash, {})
     subject.wont_be_nil
+  end
+
+  it 'filters items in a list' do
+    x = Streamer::Functors::Functor.new(
+      @hash,
+      type: 'list_filter',
+      list: 'sales',
+      filters: [
+        {
+          function: {
+            type: 'gte',
+            target: {
+              value: '2015-10-01'
+            },
+            property: 'purchase_date'
+          }
+        },
+        {
+          function: {
+            type: 'lte',
+            target: {
+              value: '2016-08-01'
+            },
+            property: 'purchase_date'
+          }
+        }
+      ]
+    )
+    result = x.call
+    result.size.must_equal 1
+    result.first[:amount].must_equal 100
   end
 
   it 'counts items in a list' do

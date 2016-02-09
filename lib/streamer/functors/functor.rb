@@ -13,18 +13,37 @@ module Streamer
       end
 
       def class_name
-        "Streamer::Functors::#{options.fetch(:type).capitalize}"
+        "Streamer::Functors::#{type_name}"
+      end
+
+      def type_name
+        options.fetch(:type).to_s.split('_').map(&:capitalize).join
       end
 
       private
 
-      def compare(op_symbol)
-        tar = target(options.fetch(:target))
-        function = options[:function]
-        value = options[:value]
-        return functor(function).call.send(op_symbol, tar) if function
-        return value.send(op_symbol, tar) unless value.nil?
-        fail 'Streamer::Functor#gte no value or fuction given'
+      def compare(op)
+        fail 'Streamer::Functor::Compare no comparison' unless valid_compare
+        compare_function(op) || compare_value(op) || compare_property(op)
+      end
+
+      def valid_compare
+        option_value || function || property
+      end
+
+      def compare_function(op_symbol)
+        return unless function
+        functor(function).call.send(op_symbol, target(options.fetch(:target)))
+      end
+
+      def compare_value(op_symbol)
+        return if option_value.nil?
+        option_value.send(op_symbol, target(options.fetch(:target)))
+      end
+
+      def compare_property(op_symbol)
+        return if property.nil?
+        prop(property).send(op_symbol, target(options.fetch(:target)))
       end
 
       def numerify(terms)
@@ -39,8 +58,8 @@ module Streamer
         payload.dig(*p.split('.'))
       end
 
-      def functor(function_hash)
-        Functor.new(payload, function_hash)
+      def functor(function_hash, pl = payload)
+        Functor.new(pl, function_hash)
       end
 
       def target(options)
@@ -53,6 +72,18 @@ module Streamer
         data = data[pk.shift]
         return data.map { |x| value(pk, x) } if data.is_a? Array
         value(pk, data)
+      end
+
+      def function
+        options[:function]
+      end
+
+      def option_value
+        options[:value]
+      end
+
+      def property
+        options[:property]
       end
     end
   end
