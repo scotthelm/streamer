@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker-compose run --rm guard guard
+docker-compose run --rm guard guard -i -p
