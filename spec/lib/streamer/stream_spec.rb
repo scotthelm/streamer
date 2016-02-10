@@ -28,7 +28,7 @@ describe 'Stream' do
         property: 'total_score',
         function: {
           type: :sum,
-          list: 'scores',
+          list: { value: 'scores' },
           property: 'score'
         }
       ).payload['total_score'].must_equal 6
@@ -97,7 +97,7 @@ describe 'Stream' do
           },
           function: {
             type: 'sum',
-            list: 'sales',
+            list: { value: 'sales' },
             property: 'amount'
           }
         }
@@ -111,13 +111,13 @@ describe 'Stream' do
           target: {
             function: {
               type: 'sum',
-              list: 'sales',
+              list: { value: 'sales' },
               property: 'amount'
             }
           },
           function: {
             type: 'sum',
-            list: 'sales',
+            list: { value: 'sales' },
             property: 'amount'
           }
         }
@@ -131,7 +131,7 @@ describe 'Stream' do
         property: 'sales_summary.amount_by_product',
         function: {
           type: 'group',
-          list: 'sales',
+          list: { value: 'sales' },
           by: 'product',
           operator: '+',
           operand: 'amount'
