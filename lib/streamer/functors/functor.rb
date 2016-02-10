@@ -85,6 +85,24 @@ module Streamer
       def property
         options[:property]
       end
+
+      def list_definition
+        options.fetch(:list)
+      end
+
+      def list
+        return list_from_value unless list_definition[:value].nil?
+        return list_from_function unless list_definition[:function].nil?
+        fail 'Streamer::Functors - no list given'
+      end
+
+      def list_from_value
+        payload[list_definition[:value]]
+      end
+
+      def list_from_function
+        functor(list_definition[:function]).call
+      end
     end
   end
 end

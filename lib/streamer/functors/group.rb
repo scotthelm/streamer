@@ -7,7 +7,6 @@ module Streamer
       end
 
       def group
-        list = options.fetch(:list)
         group_key = options.fetch(:by)
         operand_key = options.fetch(:operand)
         operator = options.fetch(:operator).to_sym
@@ -15,7 +14,7 @@ module Streamer
       end
 
       def accumulate(list, group_key, operand_key, operator)
-        payload[list].each_with_object({}) do |item, val|
+        list.each_with_object({}) do |item, val|
           val[item[group_key]] =
             (val[item[group_key]] || 0.0).send(
               operator,

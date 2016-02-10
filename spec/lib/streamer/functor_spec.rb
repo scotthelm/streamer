@@ -53,17 +53,54 @@ describe 'Functor' do
     result.first[:amount].must_equal 100
   end
 
-  it 'counts items in a list' do
-    Streamer::Functors::Functor.new(
-      @hash,
-      type: 'count', list: 'scores'
-    ).call.must_equal 3
+  describe 'Count' do
+    it 'counts items in a list' do
+      Streamer::Functors::Functor.new(
+        @hash,
+        type: 'count', list: { value: 'scores' }
+      ).call.must_equal 3
+    end
+
+    it 'counts items in a list provided by a list filter function' do
+      Streamer::Functors::Functor.new(
+        @hash,
+        type: 'count',
+        list: {
+          function: {
+            type: 'list_filter',
+            list: 'sales',
+            filters: [
+              {
+                function: {
+                  type: 'eq',
+                  target: {
+                    value: 'prod1'
+                  },
+                  property: 'product'
+                }
+              }
+            ]
+          }
+        }
+      ).call.must_equal 2
+    end
+
+    it 'throws an error if no list is provided' do
+      err = lambda do
+        Streamer::Functors::Functor.new(
+          @hash,
+          type: 'count',
+          list: {}
+        ).call
+      end.must_raise StandardError
+      err.message.must_match(/no list given/)
+    end
   end
 
   it 'averages items given a list and a property' do
     Streamer::Functors::Functor.new(
       @hash,
-      type: 'average', list: 'scores', property: 'score'
+      type: 'average', list: { value: 'scores' }, property: 'score'
     ).call.must_equal 2.0
   end
 
@@ -71,7 +108,7 @@ describe 'Functor' do
     it 'sums a list' do
       Streamer::Functors::Functor.new(
         @hash,
-        type: 'sum', list: 'scores', property: 'score'
+        type: 'sum', list: { value: 'scores' }, property: 'score'
       ).call.must_equal 6
     end
   end
@@ -90,7 +127,7 @@ describe 'Functor' do
           @hash,
           type: 'multiply', terms: ['numerator', ['denominator']]
         ).call
-      end.must_raise RuntimeError
+      end.must_raise StandardError
       err.message.must_match(/Streamer::/)
     end
   end
@@ -132,7 +169,7 @@ describe 'Functor' do
       Streamer::Functors::Functor.new(
         @hash,
         type: 'least',
-        list: 'scores',
+        list: { value: 'scores' },
         property: 'score'
       ).call.must_equal 1
     end
@@ -159,7 +196,7 @@ describe 'Functor' do
             value: 4_500
           }
         ).call
-      end.must_raise RuntimeError
+      end.must_raise StandardError
       err.message.must_match(/Streamer::Functor/)
     end
 

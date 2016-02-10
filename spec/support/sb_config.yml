@@ -5,7 +5,8 @@
         :value: 4500
       :function:
         :type: sum
-        :list: sales
+        :list:
+          :value: sales
         :property: amount
   - :function:
       :type: member

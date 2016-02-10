@@ -3,7 +3,7 @@ module Streamer
     # Count provides the number of items in a list
     class Count < Functor
       def call
-        payload[options.fetch(:list)].size
+        list.size
       end
     end
   end
