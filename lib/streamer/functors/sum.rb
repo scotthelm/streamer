@@ -7,7 +7,6 @@ module Streamer
           total + item[options.fetch(:property)]
         end
       end
-
     end
   end
 end

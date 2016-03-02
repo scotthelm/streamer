@@ -19,7 +19,8 @@
       :property: summary.sales_by_product
       :function:
         :type: group
-        :list: sales
+        :list:
+          :value: sales
         :by: product
         :operator: +
         :operand: amount
