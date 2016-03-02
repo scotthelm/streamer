@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "running example 1"
+docker-compose run --rm guard examples/example1/example.rb
