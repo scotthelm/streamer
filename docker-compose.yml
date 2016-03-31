@@ -10,7 +10,7 @@ app: &base
   command: "rake test"
 guard:
   <<: *base
-  command: "nohup guard start --force-polling --no-interactions"
+  command: "nohup guard start --no-interactions"
   ports: []
 bundle_data:
   image: tianon/true
