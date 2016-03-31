@@ -20,7 +20,17 @@
       :function:
         :type: group
         :list:
-          :value: sales
+          :function:
+            :type: list_filter
+            :list: sales
+            :filters:
+              - :function:
+                  :type: member
+                  :properties:
+                    - customer_state
+                  :facts:
+                    - IA
+                    - KS
         :by: product
         :operator: +
         :operand: amount
