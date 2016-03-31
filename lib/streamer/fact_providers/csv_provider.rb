@@ -1,3 +1,5 @@
+require 'csv'
+
 module Streamer
   module FactProviders
     # CSVProvider implements Finder Provider interface
@@ -19,7 +21,7 @@ module Streamer
       end
 
       def hash_result
-        Hash[headers.zip lines.split(',')]
+        Hash[headers.zip CSV.parse_line(lines)]
       end
 
       def scalar_result
@@ -31,7 +33,7 @@ module Streamer
       end
 
       def headers
-        @headers ||= `head -n 1 #{path}`.split(',')
+        @headers ||= CSV.parse_line(`head -n 1 #{path}`)
       end
 
       def field_number(field)
@@ -42,7 +44,7 @@ module Streamer
         segs = segments
         return unless segs.size > 1 && segs.size < 4
         <<-STMT
-awk -F',' '($#{field_number(segs[0])} ~ /^#{segs[1]}$/){print $0}' #{path}
+awk -F'","|,' '($#{field_number(segs[0])} ~ /^#{segs[1]}$/){print $0}' #{path}
         STMT
       end
     end
